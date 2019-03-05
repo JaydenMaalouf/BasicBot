@@ -1,4 +1,5 @@
-﻿using BasicBot.Services;
+﻿using BasicBot.Classes;
+using BasicBot.Services;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
@@ -23,7 +24,9 @@ namespace BasicBot
             var services = ConfigureServices();
             await services.GetRequiredService<CommandHandlerService>().InitializeAsync();
 
-            await discordClient.LoginAsync(TokenType.Bot, "your token here");
+            var token = SettingsHandler.GetSettings().BotToken;
+
+            await discordClient.LoginAsync(TokenType.Bot, token);
             await discordClient.StartAsync();
 
             await Task.Delay(-1);

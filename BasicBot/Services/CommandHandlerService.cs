@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using BasicBot.Classes;
 
 namespace BasicBot.Services
 {
@@ -46,9 +47,9 @@ namespace BasicBot.Services
                 }
 
                 var context = new CommandContext(discord, message);
-
+                var botPrefx = SettingsHandler.GetSettings().BotPrefix;
                 var argPos = 0;
-                if (message.HasCharPrefix('?', ref argPos))
+                if (message.HasStringPrefix(botPrefx, ref argPos))
                 {
                     var result = await commands.ExecuteAsync(context, argPos, provider);
                     if (result.Error != null)
